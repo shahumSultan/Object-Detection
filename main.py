@@ -1,8 +1,9 @@
 import streamlit as st
+from ObjectDetection import getObjects
 
 st.set_page_config(layout='wide', page_title='Object Detection')
 
-st.title("Object Detection using Yolov4-tiny")
+st.title("Object Detection using Yolov3-tiny")
 st.markdown('''
 This project was created as part of my :red[*Masters Degree*]. I had to develop a software that could detect
 objects in :red[*images*].
@@ -20,4 +21,17 @@ with col1:
 
 with col2:
     if uploaded_file is not None:
-        st.write("Image exists")
+        # Call getObjects function to detect objects
+        object_labels, annotated_image, colors = getObjects(uploaded_file)
+
+        if not object_labels:
+            st.header("Nothing Detected")
+        else:
+            # Display the annotated image with bounding boxes and labels
+            st.image(annotated_image, caption="Annotated Image",
+                     use_column_width=True)
+
+            # Display detected objects
+            st.header("Detected Objects")
+            for label in object_labels:
+                st.write("-> ", label)
