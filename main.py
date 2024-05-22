@@ -20,4 +20,4 @@ with col1:
 
 with col2:
     if uploaded_file is not None:
-        
+        st.write("Image exists")
